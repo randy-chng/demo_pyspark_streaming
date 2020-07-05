@@ -39,7 +39,7 @@ def process_rdd(time, rdd):
             words_df = spark.createDataFrame(row_rdd)
 
             # create a temporary view using the DF
-            words_df.createOrReplaceTempView("words")
+            words_df.createOrReplaceTempView('words')
 
             # do word count on table using SQL and print it
             word_counts_df = spark.sql(
@@ -53,23 +53,28 @@ def process_rdd(time, rdd):
                 """
             )
 
-            word_counts_df.show()
+            # word_counts_df.show()
 
             # create table if it does not exist
-            create_table()
+            if not globals()['table_created']:
+                create_table()
+                globals()['table_created'] = True
 
             # insert data into table
             insert_table(word_counts_df.toPandas())
 
         except Exception as e:
-            print("Error: %s" % e)
+            print('Error:', e)
 
 
 if __name__ == "__main__":
 
+    global table_created
+    table_created = False
+
     # create spark context with the above configuration
-    sc = SparkContext(appName="TwitterStream")
-    sc.setLogLevel("ERROR")
+    sc = SparkContext(appName='TwitterStream')
+    sc.setLogLevel('ERROR')
 
     # create the Streaming Context from the above spark context with interval size 2 seconds
     ssc = StreamingContext(sc, 2)
@@ -79,12 +84,12 @@ if __name__ == "__main__":
         details = yaml.safe_load(stream)
 
     lines = ssc.socketTextStream(
-        details["host"],
-        details["port"]
+        details['host'],
+        details['port']
     )
 
     # split each tweet into words
-    words = lines.flatMap(lambda line: line.split(" "))
+    words = lines.flatMap(lambda line: line.split(' '))
 
     # do processing for each RDD generated in each interval
     words.foreachRDD(process_rdd)
