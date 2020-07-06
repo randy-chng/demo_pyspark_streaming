@@ -13,26 +13,26 @@ Spin up GCE instance (Container Optimized OS)
 #### Step 2
 SSH into instance and clone project
 ```
-cd ~/ && git clone https://github.com/randy-chng/demo_twitter_pipeline.git
+cd ~/ && git clone https://github.com/randy-chng/demo_pyspark_streaming.git
 ```
 
 #### Step 3
 Build image and provide Twitter details [W], [X], [Y] and [Z]
 ```
 cd ~/demo_data_pipeline
-docker image build --tag twitter_pipeline_i --build-arg access_token=[W] --build-arg access_secret=[X] --build-arg consumer_key=[Y] --build-arg consumer_secret=[Z] --file Dockerfile .
+docker image build --tag streaming_pipeline_i --build-arg access_token=[W] --build-arg access_secret=[X] --build-arg consumer_key=[Y] --build-arg consumer_secret=[Z] --file Dockerfile .
 ```
 
 #### Step 4
 Run created image
 ```
-docker run --name twitter_pipeline_c --publish 5555:5555 -di twitter_pipeline_i
+docker run --name streaming_pipeline_c --publish 5555:5555 -di streaming_pipeline_i
 ```
 
 #### Step 5
 Access created container
 ```
-docker exec -it twitter_pipeline_c /bin/bash
+docker exec -it streaming_pipeline_c /bin/bash
 ```
 
 #### Step 6
@@ -49,7 +49,7 @@ For sample output, refer to notebook.ipynb
 #### Step 1
 Access created container
 ```
-docker exec -it twitter_pipeline_c /bin/bash
+docker exec -it streaming_pipeline_c /bin/bash
 ```
 
 #### Step 2
