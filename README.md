@@ -13,13 +13,13 @@ Spin up GCE instance (Container Optimized OS)
 #### Step 2
 SSH into instance and clone project
 ```
-cd ~/ && git clone https://github.com/randy-chng/demo_pyspark_streaming.git
+git clone https://github.com/randy-chng/demo_pyspark_streaming.git
 ```
 
 #### Step 3
 Build image and provide Twitter details [W], [X], [Y] and [Z]
 ```
-cd ~/demo_data_pipeline
+cd demo_pyspark_streaming
 docker image build --tag streaming_pipeline_i --build-arg access_token=[W] --build-arg access_secret=[X] --build-arg consumer_key=[Y] --build-arg consumer_secret=[Z] --file Dockerfile .
 ```
 
